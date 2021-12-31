@@ -1,6 +1,6 @@
 <?php
 
-namespace Weirdan\PsalmPluginSkeleton\Tests;
+namespace LordSimal\CakePHPPsalm\Tests;
 
 /**
  * Inherited Methods

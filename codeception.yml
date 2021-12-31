@@ -1,4 +1,4 @@
-namespace: Weirdan\PsalmPluginSkeleton\Tests
+namespace: LordSimal\CakePHPPsalm\Tests
 paths:
     tests: tests
     output: tests/_output

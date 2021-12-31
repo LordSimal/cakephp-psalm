@@ -1,9 +1,9 @@
 <?php
 
-namespace Weirdan\PsalmPluginSkeleton\Tests;
+namespace LordSimal\CakePHPPsalm\Tests;
 
 use SimpleXMLElement;
-use Weirdan\PsalmPluginSkeleton\Plugin;
+use LordSimal\CakePHPPsalm\Plugin;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
