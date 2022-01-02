@@ -31,7 +31,7 @@ class TableLocatorHandler implements MethodReturnTypeProviderInterface
             if($args[0]->value instanceof String_){
                 $table_name = $args[0]->value->value;
                 $className = App::className($table_name, 'Model/Table', 'Table');
-                if ($className && \class_exists($className)) {
+                if ($className !== null) {
                     return new Union([
                         new TNamedObject($className),
                     ]);
