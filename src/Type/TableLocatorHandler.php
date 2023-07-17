@@ -27,6 +27,10 @@ class TableLocatorHandler implements MethodReturnTypeProviderInterface
         if (in_array($event->getMethodNameLowercase(),$function_names)) {
             $args = $event->getCallArgs();
 
+            if (!$args) {
+                return null;
+            }
+
             // The first argument needs to be a string, otherwise continue
             if($args[0]->value instanceof String_){
                 $table_name = $args[0]->value->value;
