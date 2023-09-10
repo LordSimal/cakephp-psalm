@@ -11,7 +11,7 @@
     ],
     "require": {
         "vimeo/psalm": "^5.0 ",
-        "cakephp/cakephp": "5.x-dev",
+        "cakephp/cakephp": "^5.0.0",
         "ext-simplexml": "*"
     },
     "require-dev": {
@@ -57,7 +57,5 @@
         "allow-plugins": {
             "composer/package-versions-deprecated": true
         }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    }
 }
