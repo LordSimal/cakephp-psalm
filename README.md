@@ -17,7 +17,7 @@ composer require --dev vimeo/psalm
 
 Next you will need to require this package and enable it in psalm
 ```bash
-composer require --dev lordsimal/cakephp-psalm @dev
+composer require --dev lordsimal/cakephp-psalm
 ./vendor/bin/psalm-plugin enable lordsimal/cakephp-psalm
 ```
 
