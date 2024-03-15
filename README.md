@@ -1,4 +1,4 @@
-# Psalm plugin for CakePHP 4
+# Psalm plugin for CakePHP
 
 [![Latest Stable Version](http://poser.pugx.org/lordsimal/cakephp-psalm/v)](https://packagist.org/packages/lordsimal/cakephp-psalm) [![Total Downloads](http://poser.pugx.org/lordsimal/cakephp-psalm/downloads)](https://packagist.org/packages/lordsimal/cakephp-psalm) [![Latest Unstable Version](http://poser.pugx.org/lordsimal/cakephp-psalm/v/unstable)](https://packagist.org/packages/lordsimal/cakephp-psalm) [![License](http://poser.pugx.org/lordsimal/cakephp-psalm/license)](https://packagist.org/packages/lordsimal/cakephp-psalm)
 
