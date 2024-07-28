@@ -1,6 +1,6 @@
 # Psalm plugin for CakePHP
 
-[![Latest Stable Version](http://poser.pugx.org/lordsimal/cakephp-psalm/v)](https://packagist.org/packages/lordsimal/cakephp-psalm) [![Total Downloads](http://poser.pugx.org/lordsimal/cakephp-psalm/downloads)](https://packagist.org/packages/lordsimal/cakephp-psalm) [![Latest Unstable Version](http://poser.pugx.org/lordsimal/cakephp-psalm/v/unstable)](https://packagist.org/packages/lordsimal/cakephp-psalm) [![License](http://poser.pugx.org/lordsimal/cakephp-psalm/license)](https://packagist.org/packages/lordsimal/cakephp-psalm)
+[![Latest Stable Version](https://poser.pugx.org/lordsimal/cakephp-psalm/v)](https://packagist.org/packages/lordsimal/cakephp-psalm) [![Total Downloads](https://poser.pugx.org/lordsimal/cakephp-psalm/downloads)](https://packagist.org/packages/lordsimal/cakephp-psalm) [![Latest Unstable Version](https://poser.pugx.org/lordsimal/cakephp-psalm/v/unstable)](https://packagist.org/packages/lordsimal/cakephp-psalm) [![License](https://poser.pugx.org/lordsimal/cakephp-psalm/license)](https://packagist.org/packages/lordsimal/cakephp-psalm)
 
 ## Overview
 This plugin provides correct return types for CakePHP specific methods in psalm.
