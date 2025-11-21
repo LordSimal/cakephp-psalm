@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "vimeo/psalm": "^5.0|^6.0",
+        "vimeo/psalm": "^5.0|^6.0|^7.0",
         "cakephp/cakephp": "^5.0.0",
         "ext-simplexml": "*"
     },
