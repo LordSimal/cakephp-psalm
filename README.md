@@ -5,13 +5,23 @@
 ## Overview
 This plugin provides correct return types for CakePHP specific methods in psalm.
 
+## Requirements
+
+* PHP 8.5 or newer
+* CakePHP 6
+* Psalm 7
+
+CakePHP 6 currently requires development stability, and Psalm 7 is available as a release candidate.
+Until stable releases are available, set `"minimum-stability": "dev"` and `"prefer-stable": true`
+in your project's `composer.json`. This also allows CakePHP 6's Chronos 4 development dependency.
+
 ## Quickstart
 Please refer to the [full Psalm documentation](https://psalm.dev/quickstart) for a more detailed guide on
 how to use Psalm in your project.
 
 First you need to install the psalm base package and create a `psalm.xml`
 ```bash
-composer require --dev vimeo/psalm
+composer require --dev "vimeo/psalm:^7.0"
 ./vendor/bin/psalm --init
 ```
 

@@ -24,6 +24,7 @@ Feature: basics
       """
     When I run Psalm
     Then I see no errors
+    And I see exit code 0
 
   Scenario: run with errors
     Given I have the following code
@@ -33,7 +34,8 @@ Feature: basics
       """
     When I run Psalm
     Then I see these errors
-      | Type                  | Message                                                                             |
-      | InvalidScalarArgument | /Argument 1 of atan expects float, (string(not a number)\|"not a number") provided/ |
+      | Type                  | Message                                                    |
+      | InvalidScalarArgument | Argument 1 of atan expects float, but 'not a number' provided |
     And I see no other errors
+    And I see exit code 2
 

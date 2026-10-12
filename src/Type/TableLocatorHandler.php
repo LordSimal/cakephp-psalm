@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace LordSimal\CakePHPPsalm\Type;
@@ -10,21 +11,24 @@ use Psalm\Plugin\EventHandler\MethodReturnTypeProviderInterface;
 use Psalm\Type\Atomic\TNamedObject;
 use Psalm\Type\Union;
 
-class TableLocatorHandler implements MethodReturnTypeProviderInterface
+final class TableLocatorHandler implements MethodReturnTypeProviderInterface
 {
-
-    public static function getClassLikeNames(): array {
+    /** @psalm-pure */
+    #[\Override]
+    public static function getClassLikeNames(): array
+    {
         return [
             'Cake\ORM\Locator\LocatorInterface', // get()
-            'Cake\ORM\Locator\LocatorAwareTrait' // fetchTable()
+            'Cake\ORM\Locator\LocatorAwareTrait', // fetchTable()
         ];
     }
 
-    public static function getMethodReturnType( MethodReturnTypeProviderEvent $event ): ?Union {
-
+    #[\Override]
+    public static function getMethodReturnType(MethodReturnTypeProviderEvent $event): ?Union
+    {
         $function_names = ['get', 'fetchtable'];
 
-        if (in_array($event->getMethodNameLowercase(),$function_names)) {
+        if (in_array($event->getMethodNameLowercase(), $function_names, true)) {
             $args = $event->getCallArgs();
 
             if (!$args) {
@@ -32,7 +36,7 @@ class TableLocatorHandler implements MethodReturnTypeProviderInterface
             }
 
             // The first argument needs to be a string, otherwise continue
-            if($args[0]->value instanceof String_){
+            if ($args[0]->value instanceof String_) {
                 $table_name = $args[0]->value->value;
                 $className = App::className($table_name, 'Model/Table', 'Table');
                 if ($className !== null) {

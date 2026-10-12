@@ -7,12 +7,12 @@ use SimpleXMLElement;
 use Psalm\Plugin\PluginEntryPointInterface;
 use Psalm\Plugin\RegistrationInterface;
 
-class Plugin implements PluginEntryPointInterface
+final class Plugin implements PluginEntryPointInterface
 {
-    /** @return void */
+    #[\Override]
     public function __invoke(RegistrationInterface $psalm, ?SimpleXMLElement $config = null): void
     {
-        require_once 'Type/TableLocatorHandler.php';
+        require_once __DIR__ . '/Type/TableLocatorHandler.php';
         $psalm->registerHooksFromClass(TableLocatorHandler::class);
     }
 }
