@@ -11,8 +11,8 @@ This plugin provides correct return types for CakePHP specific methods in psalm.
 * CakePHP 6
 * Psalm 7
 
-CakePHP 6 currently requires development stability, and Psalm 7 is available as a release candidate.
-Until stable releases are available, set `"minimum-stability": "dev"` and `"prefer-stable": true`
+CakePHP 6 currently requires development stability.
+Until a stable release is available, set `"minimum-stability": "dev"` and `"prefer-stable": true`
 in your project's `composer.json`. This also allows CakePHP 6's Chronos 4 development dependency.
 
 ## Quickstart
@@ -118,10 +118,11 @@ therefore produce new Psalm diagnostics after an upgrade.
 
 ## Compatibility and development
 
-The package supports CakePHP 5 and Psalm 5, 6, and 7. PHP requirements are determined
-by the installed CakePHP and Psalm versions; this release does not raise them.
-The test suite supports PHPUnit 10–13. CI tests compatible PHP/Psalm/PHPUnit
-combinations and includes a lowest-dependency job.
+The 3.x branch requires PHP 8.5 or newer, CakePHP 6, and Psalm 7.
+The test suite uses PHPUnit 13. CI tests PHP 8.5 and 8.6 with the highest dependencies
+and PHP 8.5 with the lowest direct dependencies compatible with current transitive
+dependencies. Keeping transitive dependencies current avoids upstream PHP deprecations in Psalm.
+Use the 2.x branch for CakePHP 5 and older PHP or Psalm versions.
 
 ```bash
 composer install

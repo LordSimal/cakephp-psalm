@@ -1,5 +1,4 @@
 <?xml version="1.0" ?>
-<!-- Override attributes are not required while PHP 8.1 and Psalm 5 are supported. -->
 <psalm
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
@@ -8,7 +7,7 @@
     totallyTyped="true"
     findUnusedCode="true"
     findUnusedBaselineEntry="false"
-    ensureOverrideAttribute="false"
+    phpVersion="8.5"
 >
     <projectFiles>
         <directory name="src" />

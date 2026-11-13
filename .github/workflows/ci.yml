@@ -12,27 +12,13 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - php: '8.2'
-            psalm: '^5.0'
-            phpunit: '^10.1'
-            dependencies: highest
-          - php: '8.2'
-            psalm: '^5.0'
-            phpunit: '^10.1'
-            dependencies: lowest
-          - php: '8.3'
-            psalm: '^6.0'
-            phpunit: '^11.0'
-            dependencies: highest
-          - php: '8.4'
-            psalm: '^7.0'
-            phpunit: '^12.0'
+          - php: '8.5'
             dependencies: highest
           - php: '8.5'
-            psalm: '^7.0'
-            phpunit: '^13.0'
+            dependencies: lowest
+          - php: '8.6'
             dependencies: highest
-    name: PHP ${{ matrix.php }} / Psalm ${{ matrix.psalm }} / PHPUnit ${{ matrix.phpunit }} / ${{ matrix.dependencies }}
+    name: PHP ${{ matrix.php }} / ${{ matrix.dependencies }} dependencies
     steps:
       - uses: actions/checkout@v4
       - uses: shivammathur/setup-php@v2
@@ -42,14 +28,11 @@ jobs:
           coverage: none
           tools: composer:v2
       - run: composer validate --strict
-      - name: Select Psalm and PHPUnit versions
-        run: |
-          composer require --no-update --no-interaction 'vimeo/psalm:${{ matrix.psalm }}'
-          composer require --dev --no-update --no-interaction 'phpunit/phpunit:${{ matrix.phpunit }}'
-      - name: Install highest dependencies
-        if: matrix.dependencies == 'highest'
+      - name: Install dependencies
         run: composer update --prefer-dist --prefer-stable --no-interaction
-      - name: Install lowest dependencies
+      - name: Install lowest direct dependencies
         if: matrix.dependencies == 'lowest'
-        run: composer update --prefer-dist --prefer-stable --prefer-lowest --no-interaction
+        # Keep transitive dependencies current to avoid upstream PHP deprecations in Psalm.
+        run: composer update --root-reqs --prefer-dist --prefer-stable --prefer-lowest --no-interaction
+      - run: composer check-platform-reqs
       - run: composer check

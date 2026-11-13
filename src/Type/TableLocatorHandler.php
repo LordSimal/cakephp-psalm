@@ -21,11 +21,13 @@ use Psalm\Type\Union;
 /** @api */
 class TableLocatorHandler implements MethodReturnTypeProviderInterface
 {
+    #[\Override]
     public static function getClassLikeNames(): array
     {
         return [LocatorInterface::class, TableLocator::class, LocatorAwareTrait::class];
     }
 
+    #[\Override]
     public static function getMethodReturnType(MethodReturnTypeProviderEvent $event): ?Union
     {
         if (!in_array($event->getMethodNameLowercase(), ['get', 'fetchtable'], true)) {
