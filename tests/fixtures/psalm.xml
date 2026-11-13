@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<psalm errorLevel="1" findUnusedCode="false" findUnusedVariables="false" autoloader="bootstrap.php">
+    <projectFiles>
+        <file name="inference.php"/>
+        <file name="UsersTable.php"/>
+        <file name="ArchivedUsersTable.php"/>
+        <file name="PostsTable.php"/>
+        <ignoreFiles><directory name="../../vendor"/></ignoreFiles>
+    </projectFiles>
+    <issueHandlers><Trace errorLevel="info"/></issueHandlers>
+    <plugins>
+        <pluginClass class="LordSimal\CakePHPPsalm\Plugin"/>
+    </plugins>
+</psalm>

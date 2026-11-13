@@ -3,9 +3,6 @@ composer.lock
 vendor
 .php-version
 .phpunit.result.cache
-tests/_run/*
-tests/_output/*
-tests/_support/_generated/*
 
 .idea
 setup
