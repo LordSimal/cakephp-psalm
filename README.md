@@ -26,27 +26,98 @@ Finally you can try it out
 ./vendor/bin/psalm
 ```
 
-## How it works
+## Supported inference
 
-Currently only the following return types are being corrected:
+The plugin refines table return types for:
 
 * `Cake\ORM\Locator\LocatorInterface::get()`
+* `Cake\ORM\Locator\TableLocator::get()` (including inherited calls)
 * `Cake\ORM\Locator\LocatorAwareTrait::fetchTable()`
 
-The functionality for this can be found in `src/Type/TableLocatorHandler.php`
+It recognizes literal aliases, variables and constants with known literal-string types,
+fully qualified table class names, and finite unions of resolvable aliases:
 
-In there the `getClassLikeNames()` tells psalm on which classes it needs to
-change return types.
+```php
+$users = $locator->get('Users'); // App\Model\Table\UsersTable
+$alias = 'Users';
+$users = $locator->get($alias); // App\Model\Table\UsersTable
+$posts = $locator->get('Blog.Posts'); // Blog\Model\Table\PostsTable
+$users = $this->fetchTable(UsersTable::class);
+```
 
-In the `getMethodReturnType()` we check which method is currently called and
-get the first argument value from that call.
+A known `className` option takes precedence over a conventional alias. Positional and
+named arguments are supported, including named arguments in a different order:
 
-With that value we get the "real" FQCN of the table which is returned in runtime 
-and tell psalm to use that instead of the default `Cake\ORM\Table`.
+```php
+$archived = $locator->get('Users', ['className' => ArchivedUsersTable::class]);
+$archived = $this->fetchTable(
+    options: ['className' => 'ArchivedUsers'],
+    alias: 'Users',
+);
+```
 
-## Help needed
+CakePHP gives a fully qualified alias precedence over `className` when the options do
+not contain an explicit `alias`. Empty string `className` values use the original alias.
+The plugin follows these rules where they can be established statically.
 
-I would definitely appreciate help related to the following aspects of this plugin:
+## Application setup
 
-* Testing
-* Including more return types like [CakeDC/cakephp-phpstan](https://github.com/CakeDC/cakephp-phpstan) already does for PHPStan
+Table classes must be autoloadable in the PHP process running Psalm. Composer's
+application and plugin autoload mappings must therefore be available. Aliases also
+need CakePHP's `App.namespace` configuration; fully qualified names do not.
+
+If your Psalm setup does not already load this configuration, create a small bootstrap
+such as `config/psalm-bootstrap.php`:
+
+```php
+<?php
+require dirname(__DIR__) . '/vendor/autoload.php';
+
+Cake\Core\Configure::write('App.namespace', 'App');
+```
+
+Reference it in your existing `psalm.xml`:
+
+```xml
+<psalm autoloader="config/psalm-bootstrap.php">
+    <!-- Keep your existing projectFiles and plugins configuration here. -->
+</psalm>
+```
+
+Use your actual application namespace. If you already have a Psalm autoloader, add the
+configuration there instead. Plugin aliases require their corresponding namespaces to
+be autoloadable too.
+
+## Conservative fallbacks and limitations
+
+When a class cannot be resolved, the plugin returns control to Psalm and retains its
+normal return-type inference. It does not replace an uncertain result with `mixed`.
+This includes dynamic strings, unions containing an unresolved alias, unpacked
+arguments, dynamic or optional `className` overrides, and unknown options arrays.
+A call to `fetchTable()` without an alias keeps Psalm's normal type; the plugin does
+not infer a mutable `defaultTable` property.
+
+Resolution uses CakePHP's conventional `Model/Table` location. Runtime state such as
+`setConfig()`, custom locator locations, registered or cached instances, and custom
+locator implementations is not modeled. Fully qualified aliases combined with both
+`alias` and `className` options are also left to Psalm. Classes known only to Psalm's
+scanner, but unavailable through PHP autoloading, cannot be resolved by this plugin.
+
+More precise inference can reveal existing mistakes in consuming applications and
+therefore produce new Psalm diagnostics after an upgrade.
+
+## Compatibility and development
+
+The package supports CakePHP 5 and Psalm 5, 6, and 7. PHP requirements are determined
+by the installed CakePHP and Psalm versions; this release does not raise them.
+The test suite supports PHPUnit 10–13. CI tests compatible PHP/Psalm/PHPUnit
+combinations and includes a lowest-dependency job.
+
+```bash
+composer install
+composer check
+```
+
+The checks run static analysis, coding standards, PHPUnit tests with end-to-end table
+inference fixtures. PHPUnit runs Psalm directly to assert exact resolved types and
+verify conservative `Table` fallbacks.

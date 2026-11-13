@@ -1,25 +1,25 @@
 <?xml version="1.0" ?>
+<!-- Override attributes are not required while PHP 8.1 and Psalm 5 are supported. -->
 <psalm
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
 
     totallyTyped="true"
+    findUnusedCode="true"
+    findUnusedBaselineEntry="false"
+    ensureOverrideAttribute="false"
 >
     <projectFiles>
-        <directory name="." />
+        <directory name="src" />
+        <directory name="tests" />
         <ignoreFiles>
             <directory name="vendor" />
-            <directory name="tests/_support/_generated" />
-            <directory name="tests/_run" />
+            <directory name="tests/fixtures" />
         </ignoreFiles>
     </projectFiles>
 
     <issueHandlers>
         <LessSpecificReturnType errorLevel="info" />
     </issueHandlers>
-
-    <plugins>
-        <pluginClass class="Psalm\PhpUnitPlugin\Plugin" />
-    </plugins>
 </psalm>
