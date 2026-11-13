@@ -2,49 +2,32 @@
 
 namespace LordSimal\CakePHPPsalm\Tests;
 
-use SimpleXMLElement;
 use LordSimal\CakePHPPsalm\Plugin;
+use LordSimal\CakePHPPsalm\Type\TableLocatorHandler;
 use PHPUnit\Framework\TestCase;
-use Prophecy\PhpUnit\ProphecyTrait;
-use Prophecy\Prophecy\ObjectProphecy;
 use Psalm\Plugin\RegistrationInterface;
+use SimpleXMLElement;
 
-class PluginTest extends TestCase
+/** @psalm-suppress UnusedClass Instantiated by PHPUnit. */
+final class PluginTest extends TestCase
 {
-    use ProphecyTrait;
-
-    /**
-     * @var ObjectProphecy<RegistrationInterface>
-     */
-    private $registration;
-
-    /**
-     * @return void
-     */
-    public function setUp(): void
+    public function testRegistersHandlerWithoutConfig(): void
     {
-        $this->registration = $this->prophesize(RegistrationInterface::class);
+        $this->registerPlugin(null);
     }
 
-    /**
-     * @test
-     * @return void
-     */
-    public function hasEntryPoint()
+    public function testRegistersHandlerWithConfig(): void
     {
-        $this->expectNotToPerformAssertions();
-        $plugin = new Plugin();
-        $plugin($this->registration->reveal(), null);
+        $this->registerPlugin(new SimpleXMLElement('<config/>'));
     }
 
-    /**
-     * @test
-     * @return void
-     */
-    public function acceptsConfig()
+    private function registerPlugin(?SimpleXMLElement $config): void
     {
-        $this->expectNotToPerformAssertions();
-        $plugin = new Plugin();
-        $plugin($this->registration->reveal(), new SimpleXMLElement('<myConfig></myConfig>'));
+        $registration = $this->createMock(RegistrationInterface::class);
+        $registration->expects($this->once())
+            ->method('registerHooksFromClass')
+            ->with(TableLocatorHandler::class);
+
+        (new Plugin())($registration, $config);
     }
 }
